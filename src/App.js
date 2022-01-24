@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaLongArrowAltRight } from "react-icons/fa";
 import { useGlobalContext } from './context'
 
 import SetupForm from './SetupForm'
@@ -15,8 +16,18 @@ function App() {
     return <Loading />
   }
   const { question, incorrect_answers, correct_answer} = questions[index];
-  const answers = [...incorrect_answers, correct_answer];
+  // const answers = [...incorrect_answers, correct_answer];
   // let randomizedAnswers = answers[Math.floor(Math.random() * answers.length)]
+  let answers = [...incorrect_answers]
+  const tempIndex = Math.floor(Math.random() * 4)
+
+  if(tempIndex === 3) {
+    answers.push(correct_answer)
+  } else {
+    answers.push(answers[tempIndex])
+    answers[tempIndex] = correct_answer
+  }
+
   return (
     <main>
       <Modal />
@@ -36,7 +47,10 @@ function App() {
             })}
           </div>
         </article>
-        <button className='next-question' onClick={nextQuestion}>next question</button>
+        <button className='next-question' onClick={nextQuestion}>
+           <div className='next'>next question</div>
+          <FaLongArrowAltRight className='arrow'/>
+          </button>
       </section>
     </main>
   );
